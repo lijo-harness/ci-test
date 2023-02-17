@@ -1,1 +1,1 @@
-FROM nginx
+FROM lijoharness/test-build
