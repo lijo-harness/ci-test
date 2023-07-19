@@ -15,7 +15,7 @@ template:
           build: <+input>
     stages:
       - stage:
-          name: test64
+          name: test646
           identifier: test6
           type: CI
           spec:
