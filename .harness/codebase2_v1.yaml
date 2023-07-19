@@ -37,6 +37,7 @@ template:
                       command: |-
                         pwd
                         ls
+                        echo 1
       - stage:
           name: test7477
           identifier: test7
