@@ -35,3 +35,24 @@ template:
                     spec:
                       shell: Sh
                       command: pwd
+      - stage:
+          name: test7
+          identifier: test7
+          type: CI
+          spec:
+            cloneCodebase: true
+            platform:
+              os: Linux
+              arch: Amd64
+            runtime:
+              type: Cloud
+              spec: {}
+            execution:
+              steps:
+                - step:
+                    type: Run
+                    name: Run_1
+                    identifier: Run_1
+                    spec:
+                      shell: Sh
+                      command: ls
