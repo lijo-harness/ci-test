@@ -23,6 +23,8 @@ template:
               name: Run_1
               identifier: Run_1
               spec:
+                connectorRef: <+input>
+                image: <+input>
                 shell: Sh
                 command: |-
                   ls
