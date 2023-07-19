@@ -36,7 +36,7 @@ template:
                       shell: Sh
                       command: pwd
       - stage:
-          name: test74
+          name: test7477
           identifier: test7
           template:
             templateRef: codebase_stage
