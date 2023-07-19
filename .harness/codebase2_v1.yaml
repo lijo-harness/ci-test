@@ -35,3 +35,9 @@ template:
                     spec:
                       shell: Sh
                       command: pwd
+      - stage:
+          name: test7
+          identifier: test7
+          template:
+            templateRef: codebase_stage
+            versionLabel: v1
