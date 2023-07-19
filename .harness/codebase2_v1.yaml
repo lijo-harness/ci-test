@@ -43,3 +43,14 @@ template:
           template:
             templateRef: codebase_stage
             versionLabel: v1
+            templateInputs:
+              type: CI
+              spec:
+                execution:
+                  steps:
+                    - step:
+                        identifier: Run_1
+                        type: Run
+                        spec:
+                          connectorRef: <+input>
+                          image: <+input>
