@@ -24,4 +24,6 @@ template:
               identifier: Run_1
               spec:
                 shell: Sh
-                command: ls
+                command: |-
+                  ls
+                  pwd
