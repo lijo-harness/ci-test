@@ -34,7 +34,9 @@ template:
                     identifier: Run_1
                     spec:
                       shell: Sh
-                      command: pwd
+                      command: |-
+                        pwd
+                        ls
       - stage:
           name: test7477
           identifier: test7
