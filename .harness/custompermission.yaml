@@ -1,0 +1,126 @@
+pipeline:
+  name: custom-permission
+  identifier: custompermission
+  projectIdentifier: CDrepro
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: test
+        identifier: test
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: Container
+                  name: teststep
+                  identifier: migrate_database
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: nginx
+                    command: |-
+                      pwd
+                      ls /root/.m2/repository
+                    shell: Sh
+                    infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                        connectorRef: account.k8sconnector1
+                        namespace: delete-lijo
+                        resources:
+                          limits:
+                            cpu: "0.5"
+                            memory: 500Mi
+                        annotations: {}
+                        labels: {}
+                        containerSecurityContext:
+                          capabilities:
+                            drop: []
+                            add: []
+                        nodeSelector: {}
+                        volumes:
+                          - mountPath: /test
+                            type: EmptyDir
+                            spec:
+                              medium: ""
+                              size: 10G
+                    outputVariables:
+                      - name: var1
+                    envVariables: {}
+                  timeout: 10m
+                  failureStrategies:
+                    - onFailure:
+                        errors:
+                          - AllErrors
+                        action:
+                          type: ManualIntervention
+                          spec:
+                            timeout: 1h
+                            onTimeout:
+                              action:
+                                type: Ignore
+                  when:
+                    stageStatus: Success
+                    condition: "false"
+              - step:
+                  type: ShellScript
+                  name: ShellScript_2
+                  identifier: ShellScript_2
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: |
+                          ls
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+                  when:
+                    stageStatus: Success
+                    condition: "false"
+                  failureStrategies:
+                    - onFailure:
+                        errors:
+                          - AllErrors
+                        action:
+                          type: ManualIntervention
+                          spec:
+                            timeout: 1h
+                            onTimeout:
+                              action:
+                                type: Ignore
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    onDelegate: true
+                    source:
+                      type: Inline
+                      spec:
+                        script: echo "<+pipeline.stages.test.spec.execution.steps.migrate_database.ContainerStep.output.outputVariables.var1>"
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+                  when:
+                    stageStatus: Success
+                    condition: "false"
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: Retry
+                spec:
+                  retryCount: 1
+                  retryIntervals:
+                    - 1m
+                  onRetryFailure:
+                    action:
+                      type: Ignore
