@@ -39,6 +39,7 @@ pipeline:
                           capabilities:
                             drop: []
                             add: []
+                          runAsNonRoot: true
                         nodeSelector: {}
                         volumes:
                           - mountPath: /test
@@ -63,7 +64,6 @@ pipeline:
                                 type: Ignore
                   when:
                     stageStatus: Success
-                    condition: "false"
               - step:
                   type: ShellScript
                   name: ShellScript_2
@@ -81,6 +81,7 @@ pipeline:
                   timeout: 10m
                   when:
                     stageStatus: Success
+                    condition: "false"
                   failureStrategies:
                     - onFailure:
                         errors:
