@@ -65,6 +65,27 @@ pipeline:
                                 type: Ignore
                   when:
                     stageStatus: Success
+                    condition: "false"
+              - stepGroup:
+                  name: test6
+                  identifier: test6
+                  steps:
+                    - step:
+                        type: Run
+                        name: Run_1
+                        identifier: Run_1
+                        spec:
+                          connectorRef: account.dockerhubpersonal
+                          image: nginx
+                          shell: Sh
+                          command: ls
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: account.k8sconnector1
+                      namespace: delete-lijo
+                      containerSecurityContext:
+                        runAsNonRoot: true
               - step:
                   type: ShellScript
                   name: ShellScript_2
