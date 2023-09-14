@@ -88,6 +88,7 @@ pipeline:
                       namespace: delete-lijo
                       containerSecurityContext:
                         runAsNonRoot: true
+                        runAsUser: "1000"
               - step:
                   type: ShellScript
                   name: ShellScript_2
