@@ -78,14 +78,16 @@ pipeline:
                           connectorRef: account.dockerhubpersonal
                           image: nginx
                           shell: Sh
-                          command: ls
+                          command: |-
+                            ls
+                            sleep 30
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
                       connectorRef: account.k8sconnector1
                       namespace: delete-lijo
                       containerSecurityContext:
-                        runAsNonRoot: true
+                        runAsNonRoot: false
                         runAsUser: "1000"
               - step:
                   type: ShellScript
