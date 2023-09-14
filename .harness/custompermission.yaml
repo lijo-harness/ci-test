@@ -86,9 +86,6 @@ pipeline:
                     spec:
                       connectorRef: account.k8sconnector1
                       namespace: delete-lijo
-                      containerSecurityContext:
-                        runAsNonRoot: false
-                        runAsUser: "1000"
               - step:
                   type: ShellScript
                   name: ShellScript_2
