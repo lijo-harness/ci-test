@@ -10,12 +10,6 @@ template:
     type: CI
     spec:
       cloneCodebase: true
-      platform:
-        os: Linux
-        arch: Amd64
-      runtime:
-        type: Cloud
-        spec: {}
       execution:
         steps:
           - step:
@@ -23,9 +17,20 @@ template:
               name: Run_1
               identifier: Run_1
               spec:
-                connectorRef: <+input>
-                image: <+input>
+                connectorRef: account.dockerhubpersonal
+                image: nginx
                 shell: Sh
                 command: |-
                   ls
                   pwd
+                resources:
+                  limits:
+                    memory: <+input>.default(500Mi)
+      infrastructure:
+        type: KubernetesDirect
+        spec:
+          connectorRef: account.k8sconnector1
+          namespace: delete-lijo
+          automountServiceAccountToken: true
+          nodeSelector: {}
+          os: Linux
