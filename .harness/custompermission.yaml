@@ -42,8 +42,7 @@ pipeline:
                         labels: {}
                         containerSecurityContext:
                           capabilities:
-                            drop:
-                              - all
+                            drop: []
                             add: []
                           runAsNonRoot: true
                           runAsUser: "1000"
