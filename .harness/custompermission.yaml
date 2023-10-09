@@ -67,7 +67,6 @@ pipeline:
                                 type: Ignore
                   when:
                     stageStatus: Success
-                    condition: "false"
               - stepGroup:
                   name: test6
                   identifier: test6
