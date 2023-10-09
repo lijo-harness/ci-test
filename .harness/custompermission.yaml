@@ -21,6 +21,7 @@ pipeline:
                     connectorRef: account.harnessImage
                     image: nginx
                     command: |-
+                      mkdir /test
                       pwd
                       ls /root/.m2/repository
                     shell: Sh
@@ -37,7 +38,8 @@ pipeline:
                         labels: {}
                         containerSecurityContext:
                           capabilities:
-                            drop: []
+                            drop:
+                              - all
                             add: []
                           runAsNonRoot: true
                           runAsUser: "1000"
@@ -89,6 +91,9 @@ pipeline:
                       containerSecurityContext:
                         runAsNonRoot: true
                         runAsUser: "1000"
+                  when:
+                    stageStatus: Success
+                    condition: "false"
               - step:
                   type: ShellScript
                   name: ShellScript_2
