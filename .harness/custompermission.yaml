@@ -21,7 +21,10 @@ pipeline:
                     connectorRef: account.harnessImage
                     image: nginx
                     command: |-
-                      mkdir /test
+                      cat > /workdir/Dockerfile <<-EOF
+                      FROM alpine
+                      RUN echo "hello world"
+                      EOF
                       pwd
                       ls /root/.m2/repository
                     shell: Sh
